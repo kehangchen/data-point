@@ -1,4 +1,4 @@
-package com.amazonaws.serverless.sample.springboot2.filter;
+package com.mountainseed.datapoint.filter;
 
 
 import com.amazonaws.serverless.proxy.RequestReader;

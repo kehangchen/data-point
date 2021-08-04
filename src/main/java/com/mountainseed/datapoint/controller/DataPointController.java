@@ -10,12 +10,12 @@
  * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
  * and limitations under the License.
  */
-package com.amazonaws.serverless.sample.springboot2.controller;
+package com.mountainseed.datapoint.controller;
 
 
 
-import com.amazonaws.serverless.sample.springboot2.model.Pet;
-import com.amazonaws.serverless.sample.springboot2.model.PetData;
+import com.mountainseed.datapoint.model.Pet;
+import com.mountainseed.datapoint.model.PetData;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +31,7 @@ import java.util.UUID;
 
 @RestController
 @EnableWebMvc
-public class PetsController {
+public class DataPointController {
     @RequestMapping(path = "/pets", method = RequestMethod.POST)
     public Pet createPet(@RequestBody Pet newPet) {
         if (newPet.getName() == null || newPet.getBreed() == null) {

@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Example Pet Store API written with SpringBoot with the aws-serverless-java-container library
+Description: Mountain Seed DataPoint Retrieval Service
 
 Globals:
   Api:
@@ -11,9 +11,9 @@ Resources:
   PetStoreFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: com.amazonaws.serverless.sample.springboot2.StreamLambdaHandler::handleRequest
+      Handler: com.mountainseed.datapoint.StreamLambdaHandler::handleRequest
       Runtime: java8
-      CodeUri: ./target/serverless-springboot2-example-1.0-SNAPSHOT-lambda-package.zip
+      CodeUri: ./target/datapoint-retrieval-service-1.0-SNAPSHOT-lambda-package.zip
       MemorySize: 1512
       Policies: AWSLambdaBasicExecutionRole
       Timeout: 60
