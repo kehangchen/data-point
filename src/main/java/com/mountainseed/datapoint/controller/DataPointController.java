@@ -3,8 +3,10 @@ package com.mountainseed.datapoint.controller;
 
 
 import com.mountainseed.datapoint.model.DataPoint;
-import com.mountainseed.datapoint.model.DataPointRecord;
+import com.mountainseed.datapoint.service.DataPointService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,21 +16,21 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.security.Principal;
 import java.util.Optional;
-import java.util.UUID;
-
 
 @RestController
 @EnableWebMvc
 public class DataPointController {
+	
+	@Autowired
+	DataPointService dataPointService;
+	
     @RequestMapping(path = "/dps", method = RequestMethod.POST)
     public DataPoint createDataPoints(@RequestBody DataPoint newDataPoint) {
         if (newDataPoint.getPropertyAddress() == null || newDataPoint.getPropertyType() == null) {
             return null;
         }
 
-        DataPoint dbDataPoint = newDataPoint;
-        dbDataPoint.setId(UUID.randomUUID().toString());
-        return dbDataPoint;
+        return this.dataPointService.createDataPoint(newDataPoint);
     }
 
     @RequestMapping(path = "/dps", method = RequestMethod.GET)
@@ -38,28 +40,13 @@ public class DataPointController {
             queryLimit = limit.get();
         }
 
-        DataPoint[] outputDataPoints = new DataPoint[queryLimit];
-
-        for (int i = 0; i < queryLimit; i++) {
-            DataPoint newDataPoint = new DataPoint();
-            newDataPoint.setId(UUID.randomUUID().toString());
-            newDataPoint.setPropertyAddress(DataPointRecord.getRandomPropertyAddress());
-            newDataPoint.setPropertyType(DataPointRecord.getRandomPropertyType());
-            newDataPoint.setReportDate(DataPointRecord.getRandomReportDate());
-            outputDataPoints[i] = newDataPoint;
-        }
-
-        return outputDataPoints;
+        return this.dataPointService.getDataPoints(queryLimit);
     }
 
     @RequestMapping(path = "/dps/{dpId}", method = RequestMethod.GET)
-    public DataPoint listDataPoints() {
-        DataPoint newDataPoint = new DataPoint();
-        newDataPoint.setId(UUID.randomUUID().toString());
-        newDataPoint.setPropertyType(DataPointRecord.getRandomPropertyType());
-        newDataPoint.setReportDate(DataPointRecord.getRandomReportDate());
-        newDataPoint.setPropertyAddress(DataPointRecord.getRandomPropertyAddress());
-        return newDataPoint;
+    public DataPoint listDataPoints(@PathVariable("dpId") String dpId) {
+
+    	return this.dataPointService.getDataPoint(dpId);
     }
 
 }
