@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: athena
+  datasource:
+    driver-class-name: com.simba.athena.jdbc.Driver
+    url: jdbc:awsathena://AwsRegion=us-west-2
