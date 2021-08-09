@@ -38,8 +38,10 @@ public class DataPointServiceAthenaImpl implements DataPointService {
 
 	@Override
 	public DataPoint[] getDataPoints(Integer limit) {
+		
+		String querystr = "select * from ms_data.lender_cast_report limit " + limit;
 				
-		List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from ms_data.lender_cast_report limit 2;");
+		List<Map<String, Object>> list = jdbcTemplate.queryForList(querystr);
 		List<DataPoint> dps = new ArrayList<DataPoint>();
 		list.remove(0);
 		list.forEach(x -> {

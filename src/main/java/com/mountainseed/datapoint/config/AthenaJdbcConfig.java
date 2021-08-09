@@ -19,7 +19,11 @@ public class AthenaJdbcConfig {
         properties.put("s3_staging_dir", "s3://kc-textract-results/");
         properties.put("aws_credentials_provider_class","com.simba.athena.amazonaws.auth.PropertiesFileCredentialsProvider");
         // aws.credentials are supposed to be configured, with a default profile
-        properties.put("aws_credentials_provider_arguments","/Users/kchen/.aws/aws_credentials");
+        // following is for unit test
+        //properties.put("aws_credentials_provider_arguments","/Users/kchen/.aws/aws_credentials");
+        // following is for SAM and will need to cp aws_credentials to the folder with following command (SAM does not provide facility to mount a drive):
+        // docker cp aws_credentials [container_name]:/tmp/.
+        properties.put("aws_credentials_provider_arguments","/tmp/aws_credentials");
         configuration.setDbProperties(properties);
         return new JdbcTemplate(dataSource);
     }

@@ -17,6 +17,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.security.Principal;
 import java.util.Optional;
 
+import javax.ws.rs.WebApplicationException;
+
 @RestController
 @EnableWebMvc
 public class DataPointController {
@@ -34,10 +36,14 @@ public class DataPointController {
     }
 
     @RequestMapping(path = "/dps", method = RequestMethod.GET)
-    public DataPoint[] listDataPointss(@RequestParam("limit") Optional<Integer> limit, Principal principal) {
-        int queryLimit = 10;
+    public DataPoint[] listDataPointss(@RequestParam("limit") Optional<Integer> limit) {
+        int queryLimit = 3;
+        
+        // need to check limit is not bigger than certain value
+        if (limit.isPresent() && limit.get() > 100)
+        	throw new WebApplicationException("Unprocessable Entity", 422);
         if (limit.isPresent()) {
-            queryLimit = limit.get();
+            queryLimit = limit.get() + 1;
         }
 
         return this.dataPointService.getDataPoints(queryLimit);
